@@ -18,7 +18,7 @@ function CommandLineManager() {
 
   return(
     <div id="commandLineManager">
-      <CommandLineEntry/>
+      <CommandLineEntry content={"start"}/>
       <Prompt input={input} updateInput={updateInput} submitInput={submitInput}/>
     </div>
   );
