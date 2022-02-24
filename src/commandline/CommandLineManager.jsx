@@ -1,27 +1,30 @@
-import {useState} from 'react';
+import "./CommandLineManager.css";
+import {useEffect, useState} from 'react';
 import CommandLineEntry from './CommandLineEntry.jsx';
 import Prompt from './Prompt.jsx';
 
-function CommandLineManager() {
-  const [input, setInput] = useState("");
+function CommandLineManager(props) {
 
-  const updateInput = (e) => {
-    setInput(e.target.value);
-  }
+  // set the path to the correct md file via props
+  const path = require(`./content/${ props.page }.md`);
+  const [text, updateText] = useState("");
 
-  const submitInput = (e) => {
-    //check if enter was pressed
-    if (e.keyCode === 13) {
-      console.log(input);
-    }
+  fetch(path).then(r => {
+    return r.text();
+  }).then(text =>  {
+    updateText(text);
+  });
+
+  const getDelay = () => {
+    return (text.length / Math.round(1 + (Number)(text.length / 1000))) + 50;
   }
 
   return(
     <div id="commandLineManager">
-      <CommandLineEntry content={"start"}/>
-      <Prompt input={input} updateInput={updateInput} submitInput={submitInput}/>
+      <CommandLineEntry text={text}/>
+      <Prompt delay={getDelay()}/>
     </div>
-  );
+    );
 }
 
 export default CommandLineManager;

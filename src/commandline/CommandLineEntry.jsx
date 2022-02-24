@@ -1,43 +1,27 @@
-import Markdown from "markdown-to-jsx";
-import {useEffect, useState} from "react";
-
-import test from "./content/test.png";
+import ReactMarkdown from "react-markdown";
+import Code from "./Code";
+import Image from "./Image";
+import Link from "./Link";
+import Paragraph from "./Paragraph";
 
 function CommandLineEntry(props) {
-  // set the path to the correct md file via props
-  const path = require(`./content/${ props.content }.md`);
-  const [text, updateText] = useState("");
-
-  // fetching the content of path
-  fetch(path).then(r => {
-    return r.text();
-  }).then(text =>  {
-      updateText(text);
-    })
-
-
-  const [displayIndex, setDisplayIndex] = useState(0);
-
-  var intervalId;
-  useEffect(() =>  {
-    intervalId = setInterval(() => {
-      if (displayIndex < text.length) {
-        setDisplayIndex(displayIndex + 1);
-      } else {
-        clearInterval(intervalId);
-      }
-    }, 1);
-    return function cleanup() {
-      clearInterval(intervalId);
-    }
-  });
-
-  const getTextToDisplay = () => {
-    return text.substring(0, displayIndex);
-  }
-
+  const speed = Math.round(1 + (Number)(props.text.length / 1000));
   return(
-    <Markdown>{getTextToDisplay()}</Markdown>
+    <ReactMarkdown children={props.text}
+    components= {{
+    p: ({node, ...props}) =>  {
+      return <Paragraph node={node} children={props.children} speed={speed}/>;
+    },
+    img: ({node, ...props}) => {
+      return <Image node={node} image={props} speed={speed}/>
+    },
+    a: ({node, ...props}) => {
+      return <Link node={node} link={props} speed={speed}/>
+    },
+      code: ({node, ...props}) => {
+      return <Code node={node} code={props} speed={speed}/>
+    },
+    }}/>
   );
 }
 
