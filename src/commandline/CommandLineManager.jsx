@@ -16,7 +16,7 @@ function CommandLineManager(props) {
   });
 
   const getDelay = () => {
-    return (text.length / Math.round(1 + (Number)(text.length / 1000))) + 50;
+    return (text.length / Math.round(1 + (Number)(text.length / 1000)));
   }
 
   return(
