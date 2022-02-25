@@ -1,7 +1,8 @@
 import {BrowserRouter, Routes, Route} from 'react-router-dom';
 import './App.css';
-import CommandLineManager from './commandline/CommandLineManager';
 import About from './pages/About';
+import Cake from './pages/Cake';
+import Challenge from './pages/Challenge';
 import Clear from './pages/Clear';
 import Home from './pages/Home';
 import Layout from './pages/Layout';
@@ -31,6 +32,8 @@ function App() {
           <Route path="/party" element={<Party/>}/>
           <Route path="/network" element={<Network/>}/>
           <Route path="/links" element={<Links/>}/>
+          <Route path="/challenge" element={<Challenge/>}/>
+          <Route path="/cake" element={<Cake/>}/>
           <Route path="/clear" element={<Clear/>}/>
           <Route path="/ls" element={<Ls/>}/>
           <Route path="*" element={<NotFound/>}/>
